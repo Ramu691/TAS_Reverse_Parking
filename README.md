@@ -1,18 +1,11 @@
-# TAS Project Group A, Wintersemester 2024/2025
-In the TAS Course of 2024/2025, our team decided to work on **reverse parallel parking**.
+# TAS Project
+In the TAS Course our team decided to work on **reverse parallel parking**.
 
 Our project proposal can be found in our project folder:
-https://gitlab.lrz.de/tas/tas_ws2425/tas-projects/group-a/original_project/-/blob/main/Project%20Proposal.pdf?ref_type=heads
 
 Here you can see videos of the final result of our work:
 - Video of the real parking TAS-car: https://youtube.com/shorts/lSAyZmGRASM
 - Corresponding Visualization in Rviz: https://youtu.be/g1yHyOvIkZ0
-
-## Contributing Students:
-1. **Florian Samuel Blacha**
-2. **Ramkrishna Chaudhari**
-3. **Johannes Grandien**
-4. **Phil-Martin Kaulfuss**
 
 ## file structure
 
