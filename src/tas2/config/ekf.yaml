@@ -1,0 +1,113 @@
+# ===================================================================================
+# Description: EKF config file. For adjust of EKF related parameters
+# Modified By: Salman Bari
+# Date: October 08, 2022
+# ===================================================================================
+ekf_filter_node:
+    ros__parameters:
+        frequency: 30.0 #30 # increases accuracy but also CPU usage
+        # sensor_timeout: 0.1
+        two_d_mode: true # assumes 2D plane
+        transform_time_offset: 0.0 #Adjusts for delays in data relative to the transform timestamps
+        transform_timeout: 0.0 #0.5
+        print_diagnostics: true
+        debug: false   
+        permit_corrected_publication: false
+        publish_acceleration: true
+        publish_tf: true
+        
+        map_frame: map                   # Default -> "map" if not mentioned
+        odom_frame: odom                 # Default -> "odom" if not mentioned
+        base_link_frame: base_footprint  # Default -> "base_link" if not mentioned
+        world_frame: odom               # Default ->  "odom_frame" if not mentioned
+        
+        # odometry configuration
+        odom0: odom
+        # odom0_pose_rejection_threshold: 0.1 #Thresholds for rejecting odometry data if it's too different from the current state   
+        # odom0_twist_rejection_threshold: 0.1 #Lower values rejecting more data if noise is high
+
+        # odom0_config: [true,  true,  true,
+        #                false, false, false,
+        #                false, false, false,
+        #                false, false, false,
+        #                false, false, false]
+        
+
+        ## imu configuration parameters        
+        # imu0: imu/data        
+        # # which part of the IMU data the EKF should use, see above for row explanation
+        # imu0_config: [false, false, false,
+        #               true,  true,  true,
+        #               false, false, false,
+        #               true,  true,  true,
+        #               true,  true,  true]
+        
+        # imu0_nodelay: false #If true, assumes no delay in the IMU data timestamps
+        # imu0_differential: false
+        # imu0_relative: true
+        # imu0_queue_size: 5
+        # imu0_pose_rejection_threshold: 0.5 #0.8 #Rejects IMU orientation data if the difference is too large               
+        # imu0_twist_rejection_threshold: 0.5 #0.8                
+        # imu0_linear_acceleration_rejection_threshold: 0.8  
+        # imu0_remove_gravitational_acceleration: true 
+        
+        # LIDAR configuration
+        # specifies which data from scan is used
+        scan0: scan
+        scan0_config: [true, true, true,   # x, y, z position
+                       false, false, false, # roll, pitch, yaw orientation
+                       false, false, false] # velocity components
+        scan0_nodelay: false
+        scan0_differential: false
+        scan0_relative: true
+        scan0_queue_size: 10
+        scan0_pose_rejection_threshold: 0.5 #Reject pose and twist data from the laser scan if too divergent from the EKF estimate
+        scan0_twist_rejection_threshold: 0.2 #Higher thresholds reduce rejection, potentially allowing more noisy data
+        
+        # represents expected niose in the robots process model
+        # higher values indicate more uncertainty in prediction -> more reliant on sensor data
+        process_noise_covariance: [0.8, 0.0, 0.0,
+                                   0.0, 0.8, 0.0,
+                                   0.0, 0.0, 0.8,
+                                   0.0, 0.0, 0.0,
+                                   0.0, 0.0, 0.0]
+
+        # use_control: false
+        # stamped_control: false
+        # control_timeout: 0.2
+        # control_config: [true, false, false, false, false, true]
+        # acceleration_limits: [1.3, 0.0, 0.0, 0.0, 0.0, 3.4]
+        # deceleration_limits: [1.3, 0.0, 0.0, 0.0, 0.0, 4.5]
+        # acceleration_gains: [0.8, 0.0, 0.0, 0.0, 0.0, 0.9]
+        # deceleration_gains: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+        # process_noise_covariance: [0.05,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.05,   0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.06,   0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.03,   0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.03,   0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.06,   0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.025,   0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.025,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.04,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.01,   0.0,    0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.01,   0.0,    0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.02,   0.0,    0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.01,   0.0,    0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.01,   0.0,
+        #                            0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.015]
+        # initial_estimate_covariance: [1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,    0.0,     0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     1e-9,    0.0,     0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     1e-9,    0.0,    0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     1e-9,   0.0,    0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    1e-9,   0.0,
+        #                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    1e-9]
+

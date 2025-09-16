@@ -1,0 +1,3 @@
+bool wall_following
+bool rev_parking
+bool forward_parking_correction

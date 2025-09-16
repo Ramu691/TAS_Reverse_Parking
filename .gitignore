@@ -1,0 +1,25 @@
+# Ignore build and install directories
+build/
+install/
+
+# Ignore log directories
+log/
+
+# Ignore ROS 2 generated files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore colcon cache files
+.colcon/
+
+# Ignore vscode settings (if using VS Code)
+.vscode/
+
+# Ignore other editor or IDE-specific files
+.idea/
+*.swp
+*.swo
+*.swn
+

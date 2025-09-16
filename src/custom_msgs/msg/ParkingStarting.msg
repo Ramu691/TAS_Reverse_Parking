@@ -1,0 +1,11 @@
+bool rev_parking
+float64 start_x
+float64 start_y
+float64 start_heading
+float64 backward_distance
+float64 radius_left
+float64 radius_right
+float64 forward_distance
+float64 arc_angle_left
+float64 arc_angle_right
+float64 step_size
