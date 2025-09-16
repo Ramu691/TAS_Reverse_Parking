@@ -1,18 +1,6 @@
-# TAS Project Group A, Wintersemester 2024/2025
-In the TAS Course of 2024/2025, our team decided to work on **reverse parallel parking**.
+# TAS Project 
+In the TAS Course, our team decided to work on **reverse parallel parking**.
 
-Our project proposal can be found in our project folder:
-https://gitlab.lrz.de/tas/tas_ws2425/tas-projects/group-a/original_project/-/blob/main/Project%20Proposal.pdf?ref_type=heads
-
-Here you can see videos of the final result of our work:
-- Video of the real parking TAS-car:https://gitlab.lrz.de/tas/tas_ws2425/tas-projects/group-a/original_project/-/blob/main/Parallel_Parking_Video.mp4?ref_type=heads
-- Corresponding Visualization in Rviz: https://gitlab.lrz.de/tas/tas_ws2425/tas-projects/group-a/original_project/-/blob/main/perfect%20parking%20Screencast%20from%2001-27-2025%2006:22:05%20PM.webm?ref_type=heads
-
-## Contributing Students:
-1. **Florian Samuel Blacha**
-2. **Ramkrishna Chaudhari**       
-3. **Johannes Grandien**
-4. **Phil-Martin Kaulfuss**
 
 ## file structure
 To ensure a smooth experience with the TAS2 software stacl, it's recommended to set up your workspace with the following structure. Please check whether your workspace looks like this:
@@ -31,8 +19,6 @@ To ensure a smooth experience with the TAS2 software stacl, it's recommended to 
 ## /config:
 
 ### kartographie.yaml
-Main Author: Johannes Grandien<br>
-Contributing Author(s): Ramkrishna Chaudhari
 
 This file is a modified copy of **navigation.yaml**. This file initializes and sets up: amcl, bt_navigator, planner_server, controller_server, local_costmap, global_costmap, map_server, smoother_server, behavior_server, robot_state_publisher, waypoint_follower, velocity_smoother. 
 
@@ -41,24 +27,18 @@ This file is a modified copy of **navigation.yaml**. This file initializes and s
 ## /launch:
 
 ### combined_final_hardware.launch.py
-Main Author: Ramkrishna Chaudhari<br>
-Contributing Author(s): Johannes Grandien
 
 This launch file integrates multiple ROS2 launch files:`hardware_computer.launch.py`,`slam.launch.py`,`hardware_navigation.launch.py`,`custom_Nodes.launch.py`
 
 ---
 
 ### combined_simulation_launch.launch.py
-Main Author: Phil-Martin Kaulfuss<br>
-Contributing Author(s): Florian Blacha
 
 Single launch file to start all necessary *.launch* files and nodes needed for parallel parking in Simulation. This is the easiest way to start our Programm and see what has been achieved throughout the Project Phase. This .launch file combines *custom_Nodes.launch.py, **simulation.launch.py* and *parking.launch.py*.
 
 ---
 
 ### custom_nodes.launch.py
-Main Author: Phil-Martin Kaulfuss, Florian Blacha<br>
-Contributing Author(s): 
 
 Launch file to avoid starting all of the Nodes indivudally.
 Includes Nodes relevant for driving along parked cars, 
@@ -67,16 +47,12 @@ finding parking gaps, stopping correspondinly as well as driving backwards into 
 ---
 
 ### parking.launch.py
-Main Author: Johannes Grandien<br>
-Contributing Author(s): 
 
 Inspired by **navigation.launch.py**. Configured for the parallel parking use case.
 
 ---
 
 ### hardware_navigation.launch.py
-Main Author: Florian Blacha<br>
-Contributing Author(s): 
 
 Using asynch SLAM instead of default SLAM settings. SLAM is configured externally.
 
@@ -85,9 +61,6 @@ Using asynch SLAM instead of default SLAM settings. SLAM is configured externall
 ## /maps:
 
 ### dummy_map.yaml
-
-Main Author: Johannes Grandien<br>
-Contributing Author(s): 
 
 This is a completly empty map. In the use case of parallel parking the environment is unknown, which means no prebuild map can be available. However a map file needs to be passed for a succesfull launch of both the simulation and hardware.
 
@@ -99,10 +72,6 @@ This is a completly empty map. In the use case of parallel parking the environme
 
 #### Overview
 The `ParkingGapDetector` is a node designed to determine the orientation of the road and identify suitable parking gaps from an occupancy grid map. It uses clustering and bounding box analysis to detect and visualize parking spaces, publishing relevant data for other nodes in the system, such as reverse parking and wall-following nodes.
-
-#### Authors
-Main Author: Florian Blacha<br>
-Contributing Author(s):
 
 #### Subscribed Topics
 1. **`/global_costmap/right_side`** (`nav_msgs/OccupancyGrid`)
@@ -188,10 +157,6 @@ Contributing Author(s):
 #### Overview
 The `FindPPSRightSide` node processes an occupancy grid map to extract and publish data relevant to the right side of the vehicle. It enables obstacle detection and environmental monitoring for navigation and wall-following functionalities. The node dynamically adapts based on the vehicle's position in the map frame and integrates seamlessly with the broader system.
 
-#### Authors
-Main Author: Johannes Grandien<br>
-Contributing Author(s): Phil-Martin Kaulfuss
-
 #### Subscribed Topics
 1. **`/global_costmap/costmap`** (`nav_msgs/OccupancyGrid`)
    - Receives the occupancy grid map for the environment.
@@ -241,10 +206,6 @@ Contributing Author(s): Phil-Martin Kaulfuss
 
 ### Overview
 The `ForwardParkingCorrection` node assists in adjusting the vehicle's position after forward parking. It leverages LIDAR data, PID control, and TF transformations to align the vehicle precisely within the parking space. This node dynamically processes real-time data to ensure the vehicle remains centered and correctly oriented.
-
-#### Authors
-Main Author: Johannes Grandien<br>
-Contributing Author(s):  Phil-Martin Kaulfuss
 
 #### Subscribed Topics
 1. **`/state_control_topic`** (`custom_msgs/StateControl`)
@@ -319,10 +280,6 @@ Contributing Author(s):  Phil-Martin Kaulfuss
 #### Overview
 This is a ROS2 node designed to generate and publish a reverse parking trajectory. It takes parking parameters from subscribed topics, calculates a trajectory for the robot, and publishes individual poses for the robot to follow. This node integrates seamlessly with reverse parking algorithm.
 
-#### Authors
-**Main Author**: Ramkrishna Chaudhari  
-**Contributing Author(s)**:
-
 #### Subscribed Topics
 1. **`/wall_distance`** (`std_msgs/Float32`)  
    Receives the distance to the wall for calculating the parking trajectory radius.
@@ -379,10 +336,6 @@ This is a ROS2 node designed to generate and publish a reverse parking trajector
 #### Overview
 The `RobotUtilities` class provides reusable functions for determining the robot's position. 
 
-#### Authors
-**Main Author**: Phil-Martin Kaulfuss  
-**Contributing Author(s)**:
-
 #### Parameters
 - **Transform Frames**:
   - Source: `map`
@@ -408,10 +361,6 @@ The `RobotUtilities` class provides reusable functions for determining the robot
 
 #### Overview
 The `StateMachine` node serves as the central controller for managing the system's navigation and parking states. It monitors navigation success, updates state control messages, and orchestrates the transition between reverse parking and forward parking correction.
-
-#### Authors
-Main Author: Johannes Grandien<br>  
-Contributing Author(s):
 
 #### Subscribed Topics
 1. **`/rosout`** (`rcl_interfaces/Log`)
@@ -460,10 +409,6 @@ Contributing Author(s):
 #### Overview
 The `ParkingDetector` node monitors the robot's position relative to a detected parking space. It determines when the robot should stop based on the parking space's geometry and initializes the reverse parking process.
 
-#### Authors
-**Main Author**: Phil-Martin Kaulfuss  
-**Contributing Author(s)**:
-
 #### Subscribed Topics
 - **`/parking_spot_corners`** (`geometry_msgs/PoseArray`):  
   Receives the four corner points of the detected parking space.
@@ -500,10 +445,6 @@ The `ParkingDetector` node monitors the robot's position relative to a detected 
 
 #### Overview
 The node is designed to enable the TAS-car to follow our imaginary road while maintaining a desired distance from the obstacles on the right side. The node processes bounding box data representing the obstacles and parking gaps. It uses PID control for alignment and distance regulation.
-
-#### Authors
-Main Author: Florian Blacha<br>
-Contributing Author(s): Johannes Grandien, Phil-Martin Kaulfuss
 
 #### Subscribed Topics
 1. **`/boundary_boxes`** (`geometry_msgs/PoseArray`)  
@@ -564,10 +505,6 @@ The cutout from the built occupancy grid (check_right_side.py) is fixed in size.
 #### Overview
 As the name already suggests, this is another simulation world, but more complex. This file contains even more obstacles and blocks representing parked cars. Furthermore, the cars are aligned such that they represent a street that is bent. Used to check edge cases and performance stress test. Due to the final functionality of **DBSCAN_Node.py**, an actual car cannot stably drive on a bent street.
 
-#### Authors
-Main Author: Phil-Martin Kaulfuss<br>  
-Contributing Author(s):
-
 ---
 
 ### parallel_parking.world
@@ -576,9 +513,6 @@ Contributing Author(s):
 Very simple simulation world. Used for the first phase of testing of parallel parking in rviz and Gazebo.<br>
 Simulation needs to be in a **.world** file (.sdf has worse performance).
 
-#### Authors
-Main Author: Johannes Grandien<br>  
-Contributing Author(s):
 
 ---
 
@@ -587,9 +521,6 @@ Contributing Author(s):
 #### Overview
 The `parallel_parking_firstPPS_small.world` file defines a Gazebo Simulation world with a 1m gap to test the passing functionality of small parking spaces. Used for testing of parallel parking in rviz and Gazebo.
 
-#### Authors
-Main Author: Johannes Grandien<br>
-Contributing Author(s):
 
 ---
 
@@ -597,7 +528,3 @@ Contributing Author(s):
 
 #### Overview
 The `parallel_parking_obstacles.world` file defines a Gazebo Simulation world with more obstacles which allows for better SLAM performance. Used for testing of parallel parking in rviz and Gazebo.
-
-#### Authors
-Main Author:Johannes Grandien<br>
-Contributing Author(s):
